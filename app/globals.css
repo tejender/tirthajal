@@ -24,3 +24,90 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+/* globals.css */
+/* ---------- Form Inputs (Premium) ---------- */
+
+.input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgb(214 211 209); /* stone-300 */
+  background-color: #fff;
+  font-size: 0.95rem;
+  color: rgb(28 25 23); /* stone-900 */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.input::placeholder {
+  color: rgb(168 162 158); /* stone-400 */
+}
+
+.input:hover {
+  background-color: rgb(250 250 249); /* stone-50 */
+}
+
+.input:focus {
+  outline: none;
+  border-color: rgb(120 113 108); /* stone-500 */
+  box-shadow: 0 0 0 3px rgba(120, 113, 108, 0.25);
+  background-color: #fff;
+}
+
+/* Textarea */
+textarea.input {
+  line-height: 1.5;
+}
+
+/* Disabled */
+.input:disabled {
+  background-color: rgb(245 245 244);
+  cursor: not-allowed;
+}
+
+/* ---------- Button ---------- */
+
+.btn-primary {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(
+    to right,
+    rgb(28 25 23),
+    rgb(68 64 60)
+  );
+  color: #fff;
+  font-weight: 500;
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    background 0.15s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ---------- Animations ---------- */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}

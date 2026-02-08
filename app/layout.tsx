@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import { Toaster } from 'sonner'
+
 import './globals.css'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
@@ -15,6 +17,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="grain-overlay" />
         <Navbar />
         <main className="min-h-screen">{children}</main>
+        <Toaster
+          position="top-right"
+          richColors
+          closeButton
+        />
         <Footer />
       </body>
     </html>
