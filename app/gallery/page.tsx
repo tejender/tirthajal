@@ -1,125 +1,47 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { ChevronLeft, ChevronRight, X } from 'lucide-react'
+import { useState } from 'react'
+import LightboxGallery from '@/components/layout/LightboxGallery'
+import { galleryImages } from '@/lib/data'
 
-type LightboxGalleryProps = {
-  images: string[]
-  initialIndex?: number
-  isOpen: boolean
-  onClose: () => void
-}
-
-export default function LightboxGallery({
-  images,
-  initialIndex = 0,
-  isOpen,
-  onClose,
-}: LightboxGalleryProps) {
-  const [currentIndex, setCurrentIndex] = useState(initialIndex)
-
-  const touchStartX = useRef<number | null>(null)
-  const touchEndX = useRef<number | null>(null)
-
-  const SWIPE_THRESHOLD = 60
-
-  const next = () =>
-    setCurrentIndex((i) => (i + 1) % images.length)
-
-  const prev = () =>
-    setCurrentIndex((i) => (i - 1 + images.length) % images.length)
-
-  useEffect(() => {
-    setCurrentIndex(initialIndex)
-  }, [initialIndex])
-
-  useEffect(() => {
-    if (!isOpen) return
-
-    document.body.style.overflow = 'hidden'
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-      if (e.key === 'ArrowRight') next()
-      if (e.key === 'ArrowLeft') prev()
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-
-    return () => {
-      document.body.style.overflow = ''
-      window.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [isOpen])
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.targetTouches[0].clientX
-  }
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.targetTouches[0].clientX
-  }
-
-  const onTouchEnd = () => {
-    if (!touchStartX.current || !touchEndX.current) return
-
-    const distance = touchStartX.current - touchEndX.current
-
-    if (distance > SWIPE_THRESHOLD) next()
-    if (distance < -SWIPE_THRESHOLD) prev()
-
-    touchStartX.current = null
-    touchEndX.current = null
-  }
-
-  if (!isOpen) return null
+export default function GalleryPage() {
+  const [open, setOpen] = useState(false)
+  const [index, setIndex] = useState(0)
 
   return (
-    <div
-      className="fixed inset-0 z-[9999] bg-black/95 flex items-center justify-center"
-      onClick={onClose}
-      onTouchStart={onTouchStart}
-      onTouchMove={onTouchMove}
-      onTouchEnd={onTouchEnd}
-    >
-      {/* Close */}
-      <button
-        className="absolute top-6 right-6 text-white p-2 rounded-full hover:bg-white/10"
-        onClick={onClose}
-      >
-        <X className="w-7 h-7" />
-      </button>
+    <section className="pt-32 pb-24 px-6 md:px-12 bg-white min-h-screen">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-12">
+          <span className="text-xs font-medium tracking-widest text-stone-500 uppercase block">
+            Gallery
+          </span>
+          <h1 className="font-serif text-5xl md:text-7xl font-light text-stone-900">
+            Visual Stories
+          </h1>
+        </div>
 
-      {/* Left */}
-      <button
-        className="hidden md:flex absolute left-4 md:left-10 text-white p-3 rounded-full hover:bg-white/10"
-        onClick={(e) => {
-          e.stopPropagation()
-          prev()
-        }}
-      >
-        <ChevronLeft className="w-9 h-9" />
-      </button>
+        <div className="columns-1 md:columns-3 gap-4 space-y-4">
+          {galleryImages.map((img, i) => (
+            <img
+              key={i}
+              src={img}
+              alt=""
+              className="w-full rounded-lg cursor-pointer hover:opacity-90 transition"
+              onClick={() => {
+                setIndex(i)
+                setOpen(true)
+              }}
+            />
+          ))}
+        </div>
+      </div>
 
-      {/* Right */}
-      <button
-        className="hidden md:flex absolute right-4 md:right-10 text-white p-3 rounded-full hover:bg-white/10"
-        onClick={(e) => {
-          e.stopPropagation()
-          next()
-        }}
-      >
-        <ChevronRight className="w-9 h-9" />
-      </button>
-
-      {/* Image */}
-      <img
-        src={images[currentIndex]}
-        alt="Gallery image"
-        className="max-h-[90vh] max-w-[95vw] object-contain rounded-lg select-none"
-        draggable={false}
-        onClick={(e) => e.stopPropagation()}
+      <LightboxGallery
+        images={galleryImages}
+        initialIndex={index}
+        isOpen={open}
+        onClose={() => setOpen(false)}
       />
-    </div>
+    </section>
   )
 }
