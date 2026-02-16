@@ -64,47 +64,97 @@ export default function B2BCalculator() {
   // -----------------------------------
   // AUTO MODE
   // -----------------------------------
-  const calculateAuto = (): { allocation: AllocationItem[]; total: number } => {
-    let remaining = groupSize
-    const allocation: AllocationItem[] = []
-    let total = 0
+const calculateAuto = (): { allocation: AllocationItem[]; total: number } => {
+  let remaining = groupSize
+  const allocation: AllocationItem[] = []
+  let total = 0
 
-    // Duplex first (max 2)
-    for (let i = 1; i <= 2; i++) {
-      if (remaining >= 4) {
-        const guests = remaining >= 5 ? 5 : 4
-        const rate = getRate('Duplex Structure', guests)
+  // ---------- DUPLEX (Max 2, Max 6 each) ----------
+  for (let i = 1; i <= 2; i++) {
+    if (remaining >= 4) {
+      let guests = 0
 
-        allocation.push({
-          name: `Duplex ${i}`,
-          guests,
-          rate,
-        })
-
-        total += guests * rate
-        remaining -= guests
+      // Prefer balanced distribution
+      if (remaining >= 6) {
+        // If 6 creates 2 remaining, prefer 5
+        if (remaining - 6 === 2) {
+          guests = 5
+        } else {
+          guests = 6
+        }
+      } else if (remaining === 5) {
+        guests = 5
+      } else {
+        guests = 4
       }
+
+      const rate = getRate('Duplex Structure', guests)
+
+      allocation.push({
+        name: `Duplex ${i}`,
+        guests,
+        rate,
+      })
+
+      remaining -= guests
     }
-
-    // Standard rooms (max 3)
-    for (let i = 1; i <= 3; i++) {
-      if (remaining >= 2) {
-        const guests = remaining >= 3 ? 3 : 2
-        const rate = getRate('Standard Room', guests)
-
-        allocation.push({
-          name: `Standard Room ${i}`,
-          guests,
-          rate,
-        })
-
-        total += guests * rate
-        remaining -= guests
-      }
-    }
-
-    return { allocation, total }
   }
+
+  // ---------- STANDARD (Max 3, Max 3 each) ----------
+  for (let i = 1; i <= 3; i++) {
+    if (remaining >= 2) {
+      const guests = remaining >= 3 ? 3 : 2
+      const rate = getRate('Standard Room', guests)
+
+      allocation.push({
+        name: `Standard Room ${i}`,
+        guests,
+        rate,
+      })
+
+      remaining -= guests
+    }
+  }
+
+  // ---------- HANDLE SINGLE LEFTOVER ----------
+  if (remaining === 1 && allocation.length > 0) {
+    const lastRoom = allocation[allocation.length - 1]
+
+    // Try to rebalance from previous room
+    if (lastRoom.guests > 2) {
+      lastRoom.guests -= 1
+
+      const isDuplex = lastRoom.name.includes('Duplex')
+      const roomType = isDuplex
+        ? 'Duplex Structure'
+        : 'Standard Room'
+
+      lastRoom.rate = getRate(roomType, lastRoom.guests)
+
+      const rate = getRate('Standard Room', 2)
+
+      allocation.push({
+        name: `Standard Room ${allocation.length + 1}`,
+        guests: 2,
+        rate,
+      })
+
+      remaining = 0
+    }
+  }
+
+  // ---------- FINAL TOTAL ----------
+  total = allocation.reduce(
+    (sum, room) => sum + room.guests * room.rate,
+    0
+  )
+
+  return { allocation, total }
+}
+
+
+
+
 
   // -----------------------------------
   // MANUAL MODE
@@ -240,7 +290,7 @@ export default function B2BCalculator() {
                 type="number"
                 value={groupSize}
                 min={1}
-                max={20}
+                max={21}
                 onChange={(e) => setGroupSize(Number(e.target.value))}
                 className="border border-stone-400 bg-white p-3 rounded-lg w-full"
               />

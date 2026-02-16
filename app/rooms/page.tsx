@@ -8,6 +8,8 @@ import { roomsData } from '@/lib/data'
 import { Heart, Star, ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
+
+
 gsap.registerPlugin(ScrollTrigger)
 
 export default function RoomsPage() {
@@ -30,7 +32,7 @@ export default function RoomsPage() {
 
   return (
     <section ref={sectionRef} className="pt-32 pb-24 px-6 md:px-12 bg-white min-h-screen">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto ">
         <div className="mb-12 page-header">
           <span className="text-xs font-medium tracking-widest text-stone-500 uppercase mb-4 block">Accommodations</span>
           <h1 className="font-serif text-5xl md:text-7xl font-light text-stone-900 mb-6">Choose Your Sanctuary</h1>
@@ -83,6 +85,12 @@ export default function RoomsPage() {
 }
 
 function RoomCard({ room }: { room: typeof roomsData[0] }) {
+
+  const touchStartX = useRef<number | null>(null)
+const touchEndX = useRef<number | null>(null)
+const SWIPE_THRESHOLD = 50
+
+
   const [currentSlide, setCurrentSlide] = useState(0)
 
   const nextSlide = (e: React.MouseEvent) => {
@@ -97,9 +105,44 @@ function RoomCard({ room }: { room: typeof roomsData[0] }) {
     setCurrentSlide((prev) => (prev - 1 + room.images.length) % room.images.length)
   }
 
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+  touchStartX.current = e.targetTouches[0].clientX
+}
+
+const handleTouchMove = (e: React.TouchEvent) => {
+  touchEndX.current = e.targetTouches[0].clientX
+}
+
+const handleTouchEnd = (e: React.TouchEvent) => {
+  if (touchStartX.current === null || touchEndX.current === null) return
+
+  const distance = touchStartX.current - touchEndX.current
+
+  if (Math.abs(distance) > SWIPE_THRESHOLD) {
+    e.preventDefault()
+    e.stopPropagation()
+
+    if (distance > 0) {
+      setCurrentSlide((prev) => (prev + 1) % room.images.length)
+    } else {
+      setCurrentSlide((prev) => (prev - 1 + room.images.length) % room.images.length)
+    }
+  }
+
+  touchStartX.current = null
+  touchEndX.current = null
+}
+
   return (
     <Link href={`/rooms/${room.id}`} className="room-card group block">
-      <div className="relative aspect-square rounded-xl overflow-hidden mb-4 bg-stone-100">
+      <div
+  className="relative aspect-square rounded-xl overflow-hidden mb-4 bg-stone-100"
+  onTouchStart={handleTouchStart}
+  onTouchMove={handleTouchMove}
+  onTouchEnd={handleTouchEnd}
+>
+
         <div className="relative h-full">
           {room.images.map((img, idx) => (
             <img key={idx} src={img} alt={`${room.name} ${idx + 1}`} className={cn('absolute inset-0 w-full h-full object-cover transition-opacity duration-500', idx === currentSlide ? 'opacity-100' : 'opacity-0')} />
