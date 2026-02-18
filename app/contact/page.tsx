@@ -16,6 +16,8 @@ export default function ContactPage() {
   const [loading, setLoading] = useState(false)
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [formStart] = useState(() => Date.now())
+  const [showFormModal, setShowFormModal] = useState(false)
+
 
 
   const faqs: FAQ[] = [
@@ -70,178 +72,268 @@ export default function ContactPage() {
   }
 
   return (
-    <section className="pt-32 pb-24 px-6 md:px-12 bg-stone-50 min-h-screen">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-16">
+    <section className="bg-white">
 
-          {/* LEFT */}
-          <div>
-            <span className="text-xs tracking-widest uppercase text-stone-500 block mb-4">
-              Contact
-            </span>
-            <h1 className="font-serif text-5xl md:text-7xl font- text-gray-400 mb-6">
-              Get in Touch
-            </h1>
-            <p className="text-stone-600 text-lg mb-10">
-              Have questions about your stay? We’d love to hear from you.
-            </p>
+  {/* HERO BANNER */}
+  <div className="relative h-[60vh] overflow-hidden">
+    <div
+      className="absolute inset-0 bg-cover bg-center"
+      style={{
+        backgroundImage:
+          "url('https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1600&q=80')",
+      }}
+    />
+    <div className="absolute inset-0 bg-black/50" />
 
-            <div className="space-y-8">
-              <InfoItem icon={<MapPin className="w-5 h-5 text-stone-700" />} title="Location">
-                Village Gushaini, Tirthan Valley<br />
-                Himachal Pradesh, India 175123
-              </InfoItem>
+    <div className="relative z-10 h-full flex items-center justify-center text-center text-white px-6">
+      <div>
+        <h1 className="font-serif text-5xl md:text-6xl mb-6">
+          Get in Touch
+        </h1>
+        <p className="text-lg md:text-xl opacity-90 max-w-2xl mx-auto">
+          We’re here to help you plan your perfect stay in Tirthan Valley.
+        </p>
+      </div>
+    </div>
+  </div>
 
-              <InfoItem icon={<Phone className="w-5 h-5 text-stone-700" />} title="Phone">
-                +91 98765 43210<br />
-                +91 98765 43211
-              </InfoItem>
+  <div className="max-w-7xl mx-auto px-6 md:px-12 py-24">
 
-              <InfoItem icon={<Mail className="w-5 h-5 text-stone-700" />} title="Email">
-                info@tirthancottage.com<br />
-                bookings@tirthancottage.com
-              </InfoItem>
-            </div>
+    <div className="grid lg:grid-cols-2 gap-20">
 
-            {/* MAP */}
-           
-          </div>
+      {/* LEFT INFO */}
+      <div>
+        <h2 className="font-serif text-4xl text-stone-900 mb-8">
+          Visit Tirthajal Cottage
+        </h2>
 
-          {/* RIGHT */}
-          <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm">
-            <h2 className="font-serif text-3xl mb-6 text-gray-400">Send us a message</h2>
+        <p className="text-stone-600 text-lg mb-12">
+          Whether youre planning a weekend retreat, a group getaway,
+          or a peaceful workcation — we’d love to host you.
+        </p>
 
-            <form className="space-y-6" onSubmit={handleSubmit}>
-               <input type="hidden" name="formStart" value={formStart} />
-              {/* Honeypot */}
-              <input
-                type="text"
-                name="company"
-                className="hidden"
-                tabIndex={-1}
-                autoComplete="off"
-                aria-hidden="true"
-              />
+        <div className="space-y-10">
 
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="relative">
-                    <label className="block text-sm text-stone-600 mb-2">
-                        First Name
-                    </label>
-                    <input
-                        name="firstName"
-                        required
-                        className="input"
-                        placeholder="John"
-                    />
-                    </div>
+          <InfoItem icon={<MapPin className="w-5 h-5" />} title="Location">
+            Village Gushaini, Tirthan Valley<br />
+            Himachal Pradesh, India – 175123
+          </InfoItem>
 
-                    <div className="relative">
-  <label className="block text-sm text-stone-600 mb-2">
-    Last Name
-  </label>
-  <input
-    name="lastName"
-    required
-    className="input"
-    placeholder="Doe"
-  />
-</div>
+          <InfoItem icon={<Phone className="w-5 h-5" />} title="Phone">
+            +91 98765 43210<br />
+            +91 98765 43211
+          </InfoItem>
 
-</div>
+          <InfoItem icon={<Mail className="w-5 h-5" />} title="Email">
+            info@tirthajalcottage.com<br />
+            bookings@tirthajalcottage.com
+          </InfoItem>
 
-             <div className="relative">
-    <label className="block text-sm text-stone-600 mb-2">
-        Email
-    </label>
-  <input
-    name="email"
-    required
-    className="input"
-    placeholder="john.doe@example.com"
-  />
-</div>
-<div className='relative'>
-<label className="block text-sm text-stone-600 mb-2">
-    Message
-  </label>
-                <textarea
-                    name="message"
-                    rows={4}
-                    required
-                    placeholder="Tell us about your plans..."
-                    className="input resize-none"
-                />
-</div>
-
-              <button
-  type="submit"
-  disabled={loading}
-  className="btn-primary"
->
-  {loading ? 'Sending…' : 'Send Message'}
-</button>
-
-
-              {status === 'success' && (
-                <p className="text-green-600 text-center animate-fadeIn">
-                  ✅ Message sent! We’ll get back to you shortly.
-                </p>
-              )}
-
-              {status === 'error' && (
-                <p className="text-red-600 text-center animate-fadeIn">
-                  ❌ Something went wrong. Please try again.
-                </p>
-              )}
-            </form>
-          </div>
         </div>
+      </div>
 
-         <div className="mt-12 h-[300px] md:h-[400px] rounded-2xl relative overflow-hidden">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3790.1447300226337!2d77.35649827589629!3d31.64655604089622!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3905adb614170d7d%3A0x66144aceb505330b!2sTirthajal%20Kuteer!5e1!3m2!1sen!2sin!4v1770536398460!5m2!1sen!2sin"
-                className="absolute inset-0 w-full h-full border-0"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
-              />
-            </div>
+      {/* RIGHT FORM */}
+      <div className="relative hidden lg:block">
 
-        {/* FAQ */}
-        <div className="mt-24 max-w-3xl mx-auto">
-          <h2 className="font-serif text-4xl mb-12 text-center text-stone-700">
-            Frequently Asked Questions
+        <div className="absolute inset-0 bg-gradient-to-br from-stone-100 to-stone-50 rounded-3xl" />
+
+        <div className="relative bg-white/80 backdrop-blur-md rounded-3xl p-10 md:p-14 shadow-xl border border-stone-200">
+          <h2 className="font-serif text-3xl text-stone-900 mb-8">
+            Send us a Message
           </h2>
 
-          <div className="space-y-4">
-            {faqs.map((faq, idx) => (
-              <div key={idx} className="bg-white rounded-xl overflow-hidden">
-                <button
-                  type="button"
-                  className="w-full p-6 flex justify-between items-center text-left text-stone-600"
-                  onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                >
-                  <span className="font-medium">{faq.q}</span>
-                  <ChevronDown
-                    className={`w-5 h-5 transition-transform ${
-                      openFaq === idx ? 'rotate-180' : ''
-                    }`}
-                  />
-                </button>
+          <form className="space-y-6" onSubmit={handleSubmit}>
+  <input type="hidden" name="formStart" value={formStart} />
 
-                {openFaq === idx && (
-                  <div className="px-6 pb-6 text-stone-600">
-                    {faq.a}
-                  </div>
-                )}
+  {/* Honeypot */}
+  <input
+    type="text"
+    name="company"
+    className="hidden"
+    tabIndex={-1}
+    autoComplete="off"
+  />
+
+  <div className="grid md:grid-cols-2 gap-6">
+    <div>
+      <label className="block text-sm font-medium text-stone-700 mb-2">
+        First Name
+      </label>
+      <input
+        name="firstName"
+        required
+        placeholder="John"
+        className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-stone-900 transition"
+      />
+    </div>
+
+    <div>
+      <label className="block text-sm font-medium text-stone-700 mb-2">
+        Last Name
+      </label>
+      <input
+        name="lastName"
+        required
+        placeholder="Doe"
+        className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-stone-900 transition"
+      />
+    </div>
+  </div>
+
+  <div>
+    <label className="block text-sm font-medium text-stone-700 mb-2">
+      Email
+    </label>
+    <input
+      name="email"
+      required
+      placeholder="john.doe@example.com"
+      className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-stone-900 transition"
+    />
+  </div>
+
+  <div>
+    <label className="block text-sm font-medium text-stone-700 mb-2">
+      Message
+    </label>
+    <textarea
+      name="message"
+      rows={4}
+      required
+      placeholder="Tell us about your plans..."
+      className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-stone-900 transition resize-none"
+    />
+  </div>
+
+  <button
+    type="submit"
+    disabled={loading}
+    className="w-full bg-stone-900 text-white py-4 rounded-xl hover:bg-stone-800 transition font-medium disabled:opacity-60"
+  >
+    {loading ? 'Sending…' : 'Send Message'}
+  </button>
+</form>
+
+        </div>
+      </div>
+    </div>
+
+    {/* MAP */}
+    <div className="mt-24 rounded-3xl overflow-hidden shadow-xl border border-stone-200">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3790.1447300226337!2d77.35649827589629!3d31.64655604089622!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3905adb614170d7d%3A0x66144aceb505330b!2sTirthajal%20Kuteer!5e1!3m2!1sen!2sin!4v1770536398460!5m2!1sen!2sin"
+        className="w-full h-[400px] border-0"
+        loading="lazy"
+      />
+    </div>
+
+    {/* FAQ */}
+    <div className="mt-28 max-w-4xl mx-auto">
+      <h2 className="font-serif text-4xl text-center text-stone-900 mb-16">
+        Frequently Asked Questions
+      </h2>
+
+      <div className="space-y-4">
+        {faqs.map((faq, idx) => (
+          <div
+            key={idx}
+            className="border border-stone-200 rounded-2xl bg-white shadow-sm"
+          >
+            <button
+              type="button"
+              className="w-full px-8 py-6 flex justify-between items-center text-left text-stone-800"
+              onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+            >
+              <span className="font-medium text-lg">{faq.q}</span>
+              <ChevronDown
+                className={`w-5 h-5 transition-transform ${
+                  openFaq === idx ? 'rotate-180' : ''
+                }`}
+              />
+            </button>
+
+            {openFaq === idx && (
+              <div className="px-8 pb-8 text-stone-600 text-base leading-relaxed">
+                {faq.a}
               </div>
-            ))}
+            )}
           </div>
+        ))}
+      </div>
+    </div>
+
+  </div>
+  {/* Mobile Floating Button */}
+<button
+  onClick={() => setShowFormModal(true)}
+  className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-stone-900 text-white px-8 py-4 rounded-full shadow-2xl hover:bg-stone-800 transition font-medium"
+>
+  Enquire Now
+</button>
+
+{/* Mobile Form Modal */}
+{showFormModal && (
+  <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div className="relative bg-white w-full max-w-lg rounded-3xl shadow-2xl p-8 max-h-[90vh] overflow-y-auto">
+
+      <button
+        onClick={() => setShowFormModal(false)}
+        className="absolute top-4 right-4 text-stone-600 hover:text-stone-900"
+      >
+        ✕
+      </button>
+
+      <h2 className="font-serif text-2xl text-stone-900 mb-6">
+        Send us a Message
+      </h2>
+
+      {/* Reuse Same Form */}
+      <form className="space-y-6" onSubmit={handleSubmit}>
+        <input type="hidden" name="formStart" value={formStart} />
+        <input type="text" name="company" className="hidden" />
+
+        <div className="grid gap-6">
+          <input
+            name="firstName"
+            required
+            placeholder="First Name"
+            className="w-full px-4 py-3 rounded-xl border border-stone-300"
+          />
+          <input
+            name="lastName"
+            required
+            placeholder="Last Name"
+            className="w-full px-4 py-3 rounded-xl border border-stone-300"
+          />
+          <input
+            name="email"
+            required
+            placeholder="Email"
+            className="w-full px-4 py-3 rounded-xl border border-stone-300"
+          />
+          <textarea
+            name="message"
+            rows={4}
+            required
+            placeholder="Tell us about your plans..."
+            className="w-full px-4 py-3 rounded-xl border border-stone-300 resize-none"
+          />
         </div>
 
-      </div>
-    </section>
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-stone-900 text-white py-4 rounded-xl hover:bg-stone-800 transition font-medium mt-6"
+        >
+          {loading ? 'Sending…' : 'Send Message'}
+        </button>
+      </form>
+    </div>
+  </div>
+)}
+
+</section>
+
   )
 }
 
