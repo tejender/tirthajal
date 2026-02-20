@@ -39,13 +39,13 @@ export default function Navbar() {
             'font-serif text-2xl md:text-3xl font-medium tracking-tight transition-colors',
             isScrolled || !isHome ? 'text-stone-900' : 'text-white'
           )}>
-            Tirthan<span className="text-stone-500 italic">.</span>
+            Tirthajal <span className='text-sm text-blue-300'>Stays</span><span className="text-stone-500 italic"></span>
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link key={link.href} href={link.href} className={cn(
-                'text-sm font-medium hover-underline transition-colors',
+                'text-sm font-bold hover-underline transition-colors',
                 isScrolled || !isHome ? 'text-stone-600 hover:text-stone-900' : 'text-white/90 hover:text-white'
               )}>
                 {link.label}
@@ -74,7 +74,7 @@ export default function Navbar() {
         isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
       )}>
         {navLinks.map((link) => (
-          <Link key={link.href} href={link.href} onClick={() => setIsMobileMenuOpen(false)} className="font-serif text-4xl text-stone-900">
+          <Link key={link.href} href={link.href} onClick={() => setIsMobileMenuOpen(false)} className="font-serif text-4xl text-stone-900 ">
             {link.label}
           </Link>
         ))}

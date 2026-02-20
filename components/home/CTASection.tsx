@@ -13,6 +13,8 @@ export default function CTASection() {
           Check Availability
         </Link>
       </div>
+
+      
     </section>
   )
 }

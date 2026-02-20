@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { X, MapPin, Mountain, Clock } from 'lucide-react'
+import { X, MapPin } from 'lucide-react'
 import { experiences } from '@/lib/experiencesData'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -31,6 +31,7 @@ export default function ExperiencesPage() {
     if (!sectionRef.current) return
 
     const ctx = gsap.context(() => {
+
       // Parallax hero
       if (heroRef.current) {
         gsap.to(heroRef.current, {
@@ -46,17 +47,17 @@ export default function ExperiencesPage() {
 
       // Reveal cards
       gsap.utils.toArray<HTMLElement>('.exp-card').forEach((card) => {
-  gsap.from(card, {
-    opacity: 0,
-    y: 60,
-    duration: 0.9,
-    ease: 'power3.out',
-    scrollTrigger: {
-      trigger: card,
-      start: 'top 85%',
-    }
-  })
-})
+        gsap.from(card, {
+          opacity: 0,
+          y: 60,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+          }
+        })
+      })
 
     }, sectionRef)
 
@@ -92,11 +93,16 @@ export default function ExperiencesPage() {
           }}
         />
         <div className="absolute inset-0 bg-black/50" />
+
         <div className="relative z-10 h-full flex items-center justify-center text-center text-white px-6">
           <div>
             <h1 className="font-serif text-5xl md:text-6xl mb-6">
               Himalayan Experiences
             </h1>
+
+            {/* Accent Divider */}
+            <div className="w-20 h-1 bg-[#F36E20] mx-auto rounded-full mb-6"></div>
+
             <p className="text-lg opacity-90 max-w-2xl mx-auto">
               Discover curated journeys around Jibhi & Tirthan Valley.
             </p>
@@ -104,13 +110,17 @@ export default function ExperiencesPage() {
         </div>
       </section>
 
+
       {/* GRID */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-24 grid md:grid-cols-2 gap-10">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 py-24 grid md:grid-cols-2 gap-12">
 
         {experiences.map((exp, idx) => (
           <div
             key={idx}
-            className="exp-card bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition"
+            className="exp-card bg-white rounded-3xl overflow-hidden
+            shadow-[0_10px_35px_rgba(0,0,0,0.08)]
+            hover:shadow-[0_18px_45px_rgba(0,0,0,0.15)]
+            transition duration-500"
           >
             <div className="aspect-[16/9] overflow-hidden">
               <img
@@ -123,7 +133,7 @@ export default function ExperiencesPage() {
             <div className="p-8">
               <div className="flex justify-between items-center mb-4">
                 <span className="text-sm text-stone-500 flex items-center gap-2">
-                  <MapPin className="w-4 h-4" />
+                  <MapPin className="w-4 h-4 text-[#F36E20]" />
                   {exp.location}
                 </span>
 
@@ -144,7 +154,11 @@ export default function ExperiencesPage() {
 
               <button
                 onClick={() => setSelected(exp)}
-                className="px-6 py-3 bg-stone-900 text-white rounded-full hover:bg-stone-800 transition"
+                className="px-6 py-3 
+                bg-[#F36E20] text-white 
+                rounded-full 
+                hover:bg-[#D65E1A]
+                transition duration-300"
               >
                 Explore Guide
               </button>
@@ -153,6 +167,7 @@ export default function ExperiencesPage() {
         ))}
       </div>
 
+
       {/* MODAL */}
       {selected && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -160,7 +175,7 @@ export default function ExperiencesPage() {
 
             <button
               onClick={() => setSelected(null)}
-              className="absolute top-4 right-4"
+              className="absolute top-4 right-4 text-stone-600 hover:text-[#F36E20]"
             >
               <X />
             </button>
@@ -176,10 +191,12 @@ export default function ExperiencesPage() {
                 {selected.title}
               </h2>
 
+              <div className="w-12 h-1 bg-[#F36E20] rounded-full"></div>
+
               <p className="text-stone-600">{selected.overview}</p>
 
               <div>
-                <h4 className="font-semibold mb-2">Highlights</h4>
+                <h4 className="font-semibold mb-2 text-stone-900">Highlights</h4>
                 <ul className="list-disc list-inside text-stone-600 space-y-1">
                   {selected.highlights.map((h, i) => (
                     <li key={i}>{h}</li>
@@ -192,7 +209,7 @@ export default function ExperiencesPage() {
                 <div><strong>Distance:</strong> {selected.distance}</div>
               </div>
 
-              <div className="bg-stone-100 p-6 rounded-xl">
+              <div className="bg-stone-100 p-6 rounded-xl border-l-4 border-[#F36E20]">
                 <p className="text-stone-800">
                   🌿 <strong>Local Tip:</strong> {selected.tip}
                 </p>
@@ -207,76 +224,59 @@ export default function ExperiencesPage() {
       )}
 
 
-{/* CONTINUE YOUR JOURNEY */}
-<section className="bg-white py-28 px-6 md:px-12">
-  <div className="max-w-7xl mx-auto">
+      {/* CONTINUE YOUR JOURNEY */}
+      <section className="bg-white py-28 px-6 md:px-12">
+        <div className="max-w-7xl mx-auto">
 
-    <div className="text-center mb-16">
-      <h2 className="font-serif text-4xl md:text-5xl text-stone-900 mb-6">
-        Continue Your Himalayan Journey
-      </h2>
-      <p className="text-stone-600 max-w-2xl mx-auto text-lg">
-        Planning a longer Himachal circuit? Extend your trip to explore more mountain gems nearby.
-      </p>
-    </div>
+          <div className="text-center mb-16">
+            <h2 className="font-serif text-4xl md:text-5xl text-stone-900 mb-6">
+              Continue Your Himalayan Journey
+            </h2>
 
-    <div className="grid md:grid-cols-4 gap-8 journey-grid">
+            <div className="w-20 h-1 bg-[#F36E20] mx-auto rounded-full mb-6"></div>
 
-      {[
-        {
-          name: 'Manali',
-          image: 'https://images.unsplash.com/photo-1605538883669-825d2d5b1e36?auto=format&fit=crop&w=800&q=80',
-          time: 'Approx 3–4 hrs drive'
-        },
-        {
-          name: 'Kasol',
-          image: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80',
-          time: 'Approx 2.5 hrs drive'
-        },
-        {
-          name: 'Tosh',
-          image: 'https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&fit=crop&w=800&q=80',
-          time: 'Approx 3 hrs drive'
-        },
-        {
-          name: 'Kullu',
-          image: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80',
-          time: 'Approx 1.5 hrs drive'
-        }
-      ].map((place, index) => (
-        <div
-          key={index}
-          className="group bg-stone-50 rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition duration-500 journey-card"
-        >
-          <div className="aspect-[4/3] overflow-hidden">
-            <img
-              src={place.image}
-              alt={place.name}
-              className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
-            />
-          </div>
-
-          <div className="p-6 text-center">
-            <h3 className="font-serif text-2xl text-stone-900 mb-2">
-              {place.name}
-            </h3>
-            <p className="text-stone-600 text-sm">
-              {place.time}
+            <p className="text-stone-600 max-w-2xl mx-auto text-lg">
+              Extend your trip to explore more mountain gems nearby.
             </p>
           </div>
+
+          <div className="grid md:grid-cols-4 gap-8">
+
+            {[
+              { name: 'Manali', image: 'https://images.unsplash.com/photo-1605538883669-825d2d5b1e36?auto=format&fit=crop&w=800&q=80', time: '3–4 hrs drive' },
+              { name: 'Kasol', image: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80', time: '2.5 hrs drive' },
+              { name: 'Tosh', image: 'https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&fit=crop&w=800&q=80', time: '3 hrs drive' },
+              { name: 'Kullu', image: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80', time: '1.5 hrs drive' }
+            ].map((place, index) => (
+              <div
+                key={index}
+                className="group bg-stone-50 rounded-3xl overflow-hidden
+                shadow-[0_8px_30px_rgba(0,0,0,0.08)]
+                hover:shadow-[0_18px_45px_rgba(0,0,0,0.15)]
+                transition duration-500"
+              >
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img
+                    src={place.image}
+                    alt={place.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+                  />
+                </div>
+
+                <div className="p-6 text-center">
+                  <h3 className="font-serif text-2xl text-stone-900 mb-2">
+                    {place.name}
+                  </h3>
+                  <p className="text-stone-600 text-sm">
+                    {place.time}
+                  </p>
+                </div>
+              </div>
+            ))}
+
+          </div>
         </div>
-      ))}
-
-    </div>
-
-    <div className="text-center mt-16">
-      <p className="text-stone-600 text-lg max-w-2xl mx-auto">
-        Need help planning your route? We’ll happily suggest scenic drives and hidden stops during your stay.
-      </p>
-    </div>
-
-  </div>
-</section>
+      </section>
 
     </div>
   )
