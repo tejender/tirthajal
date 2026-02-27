@@ -5,6 +5,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import Image from 'next/image'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -92,12 +93,16 @@ export default function Intro() {
           {/* IMAGE SIDE */}
           <div className="relative">
 
-            <div className="intro-image rounded-2xl overflow-hidden aspect-[4/5] shadow-premium">
-              <img
-                src="https://images.unsplash.com/photo-1587061949409-02df41d5e562?q=80&w=2070&auto=format&fit=crop"
-                alt="Cottage Interior"
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-              />
+            <div className="intro-image relative rounded-2xl overflow-hidden aspect-[4/5] shadow-premium">
+
+              <Image
+                 
+                  src="/images/3.jpeg"
+                  alt="Tirthan Valley Mountains"
+                  fill
+                  priority
+                  className="object-cover"
+                />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
             </div>
 

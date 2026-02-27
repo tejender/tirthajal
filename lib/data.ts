@@ -34,7 +34,7 @@ export const roomsData: Room[] = [
     bathrooms: 1,
     size: '450 sq ft',
     images: [
-      'https://images.unsplash.com/photo-1616594039964-40891a909d99?q=80&w=2070&auto=format&fit=crop',
+      '/images/rooms/home-card/1.jpeg',
       'https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=1974&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=2070&auto=format&fit=crop'
@@ -64,7 +64,7 @@ export const roomsData: Room[] = [
     bathrooms: 1,
     size: '380 sq ft',
     images: [
-      'https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=1974&auto=format&fit=crop',
+      '/images/rooms/home-card/r-2.jpeg',
       'https://images.unsplash.com/photo-1616594039964-40891a909d99?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=2070&auto=format&fit=crop'
@@ -94,7 +94,7 @@ export const roomsData: Room[] = [
     bathrooms: 2,
     size: '720 sq ft',
     images: [
-      'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070&auto=format&fit=crop',
+      '/images/rooms/home-card/r-3.jpeg',
       'https://images.unsplash.com/photo-1587061949409-02df41d5e562?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1616594039964-40891a909d99?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=1974&auto=format&fit=crop'

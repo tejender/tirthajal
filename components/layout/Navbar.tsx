@@ -16,6 +16,9 @@ const navLinks = [
 ]
 
 export default function Navbar() {
+ 
+
+
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const pathname = usePathname()
@@ -26,7 +29,9 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const isHome = pathname === '/'
+
+   const transparentPages = ['/', '/about', '/contact', '/experiences']
+  const isTransparentPage = transparentPages.includes(pathname)
 
   return (
     <>
@@ -37,7 +42,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <Link href="/" className={cn(
             'font-serif text-2xl md:text-3xl font-medium tracking-tight transition-colors',
-            isScrolled || !isHome ? 'text-stone-900' : 'text-white'
+            isScrolled || !isTransparentPage ? 'text-stone-900' : 'text-white'
           )}>
             Tirthajal <span className='text-sm text-blue-300'>Stays</span><span className="text-stone-500 italic"></span>
           </Link>
@@ -46,14 +51,14 @@ export default function Navbar() {
             {navLinks.map((link) => (
               <Link key={link.href} href={link.href} className={cn(
                 'text-sm font-bold hover-underline transition-colors',
-                isScrolled || !isHome ? 'text-stone-600 hover:text-stone-900' : 'text-white/90 hover:text-white'
+                isScrolled || !isTransparentPage ? 'text-stone-600 hover:text-stone-900' : 'text-white/90 hover:text-white'
               )}>
                 {link.label}
               </Link>
             ))}
             <Link href="/rooms" className={cn(
               'px-6 py-3 text-sm font-medium rounded-full transition-colors',
-              isScrolled || !isHome ? 'bg-stone-900 text-white hover:bg-stone-800' : 'bg-white text-stone-900 hover:bg-stone-100'
+              isScrolled || !isTransparentPage ? 'bg-stone-900 text-white hover:bg-stone-800' : 'bg-white text-stone-900 hover:bg-stone-100'
             )}>
               Book Now
             </Link>
@@ -61,9 +66,9 @@ export default function Navbar() {
 
           <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="md:hidden relative z-50 p-2">
             {isMobileMenuOpen ? (
-              <X className={cn('w-6 h-6', isScrolled || !isHome ? 'text-stone-900' : 'text-white')} />
+              <X className={cn('w-6 h-6', isScrolled || !isTransparentPage ? 'text-stone-900' : 'text-white')} />
             ) : (
-              <Menu className={cn('w-6 h-6', isScrolled || !isHome ? 'text-stone-900' : 'text-white')} />
+              <Menu className={cn('w-6 h-6', isScrolled || !isTransparentPage ? 'text-stone-900' : 'text-white')} />
             )}
           </button>
         </div>

@@ -89,7 +89,7 @@ export default function ExperiencesPage() {
           className="absolute inset-0 bg-cover bg-center"
           style={{
             backgroundImage:
-              "url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80')"
+              "url('/images/6.JPG')"
           }}
         />
         <div className="absolute inset-0 bg-black/50" />
@@ -123,6 +123,7 @@ export default function ExperiencesPage() {
             transition duration-500"
           >
             <div className="aspect-[16/9] overflow-hidden">
+            
               <img
                 src={exp.image}
                 alt={exp.title}

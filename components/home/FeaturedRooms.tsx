@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Link from 'next/link'
 import { roomsData } from '@/lib/data'
 import { ArrowRight, Users } from 'lucide-react'
+import Image from 'next/image'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -91,11 +92,13 @@ export default function FeaturedRooms() {
               {/* IMAGE */}
               <div className="relative overflow-hidden rounded-2xl aspect-[3/4] mb-6 shadow-premium">
 
-                <img
-                  src={room.images[0]}
-                  alt={room.name}
-                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                />
+                <Image
+    src={room.images[0]}
+    alt={room.name}
+    fill
+    className="object-cover transition-transform duration-700 group-hover:scale-110"
+    sizes="(max-width: 768px) 100vw, 33vw"
+  />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 

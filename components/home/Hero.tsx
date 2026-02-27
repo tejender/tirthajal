@@ -5,6 +5,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import Image from 'next/image'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -52,17 +53,20 @@ export default function Hero() {
 
       {/* Background */}
       <div className="absolute inset-0">
-        <img
-          ref={imageRef}
-          src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2070&auto=format&fit=crop"
-          alt="Tirthan Valley Mountains"
-          className="w-full h-full object-cover scale-110"
-        />
+  <Image
+    ref={imageRef}
+    src="/images/1.jpeg"
+    alt="Tirthan Valley Mountains"
+    fill
+    priority
+    className="object-cover"
+  />
 
-        {/* Cinematic + Warm Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-primary/20 via-transparent to-transparent" />
-      </div>
+  {/* Cinematic + Warm Overlay */}
+  <div className="absolute inset-0 bg-linear-to-b from-black/60 via-black/40 to-black/80" />
+  <div className="absolute inset-0 bg-linear-to-t from-brand-primary/20 via-transparent to-transparent" />
+</div>
+
 
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col justify-center items-center text-center px-6">
