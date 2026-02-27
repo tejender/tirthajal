@@ -4,6 +4,7 @@ import { Toaster } from 'sonner'
 import './globals.css'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import MobileBottomNav from '@/components/layout/bottomNav'
 
 export const metadata: Metadata = {
   title: 'Tirthan Valley Cottage | Himalayan Retreat',
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           closeButton
         />
         <Footer />
+        <MobileBottomNav />
       </body>
     </html>
   )

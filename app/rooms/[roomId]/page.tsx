@@ -12,7 +12,7 @@ import {
   Bed,
   Bath,
   Maximize,
-  ChevronLeft,
+
   Check,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -29,7 +29,8 @@ export default function RoomDetailPage({
 
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [lightboxImage, setLightboxImage] = useState('')
-  const [showBookingBar, setShowBookingBar] = useState(false)
+ const [showBookingBar, setShowBookingBar] = useState(true)
+
 
   const sectionRef = useRef<HTMLDivElement>(null)
 
@@ -45,17 +46,43 @@ export default function RoomDetailPage({
         ease: 'power3.out',
       })
 
-      ScrollTrigger.create({
-        trigger: '.booking-section',
-        start: 'top bottom',
-        end: 'bottom top',
-        onUpdate: (self) =>
-          setShowBookingBar(self.progress > 0.1 && self.direction === 1),
-      })
+     
     }, sectionRef)
 
     return () => ctx.revert()
   }, [])
+
+  useEffect(() => {
+  let lastScrollY = window.scrollY
+  let timeout: ReturnType<typeof setTimeout> | null = null
+
+  const handleScroll = () => {
+    const currentScrollY = window.scrollY
+
+    if (currentScrollY < lastScrollY) {
+      // scrolling UP → hide
+      setShowBookingBar(false)
+    } else {
+      // scrolling DOWN → show
+      setShowBookingBar(true)
+    }
+
+    if (timeout) clearTimeout(timeout)
+
+    timeout = setTimeout(() => {
+      setShowBookingBar(true)
+    }, 150)
+
+    lastScrollY = currentScrollY
+  }
+
+  window.addEventListener('scroll', handleScroll, { passive: true })
+
+  return () => {
+    window.removeEventListener('scroll', handleScroll)
+  }
+}, [])
+
 
   const openLightbox = (src: string) => {
     setLightboxImage(src)
